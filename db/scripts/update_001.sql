@@ -17,3 +17,5 @@ CREATE TABLE ticket (
     cell INT NOT NULL,
     user_id INT NOT NULL REFERENCES users(id)
 );
+
+ALTER TABLE ticket ADD CONSTRAINT unique_seat UNIQUE (session_id, pos_row, cell)
