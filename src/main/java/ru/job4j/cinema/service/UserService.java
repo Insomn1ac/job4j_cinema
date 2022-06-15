@@ -21,7 +21,7 @@ public class UserService {
         return store.add(user);
     }
 
-    public User findUserByName(String name) {
+    public Optional<User> findUserByName(String name) {
         return store.findUserByName(name);
     }
 

@@ -6,6 +6,8 @@ public class Ticket {
     private int posRow;
     private int cell;
     private int userId;
+    private String name;
+    private String timeOfSession;
 
     public Ticket() {
 
@@ -28,6 +30,13 @@ public class Ticket {
         this.posRow = posRow;
         this.cell = cell;
         this.userId = userId;
+    }
+
+    public Ticket(String name, String timeOfSession, int posRow, int cell) {
+        this.name = name;
+        this.timeOfSession = timeOfSession;
+        this.posRow = posRow;
+        this.cell = cell;
     }
 
     public int getId() {
@@ -68,5 +77,21 @@ public class Ticket {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getTimeOfSession() {
+        return timeOfSession;
+    }
+
+    public void setTimeOfSession(String timeOfSession) {
+        this.timeOfSession = timeOfSession;
     }
 }

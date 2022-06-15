@@ -61,38 +61,43 @@ public class TicketDbStore {
         return Optional.ofNullable(ticket);
     }
 
-    public Ticket findById(int id) {
+    public Optional<Ticket> findById(int id) {
+        Optional<Ticket> ticket = Optional.empty();
         try (Connection connection = pool.getConnection();
              PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ticket WHERE id = ?")) {
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return new Ticket(rs.getInt("id"),
+                    ticket = Optional.of(new Ticket(rs.getInt("id"),
                             rs.getInt("sessionId"),
                             rs.getInt("posRow"),
                             rs.getInt("cell"),
-                            rs.getInt("userId"));
+                            rs.getInt("userId")));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return ticket;
     }
 
-    public void update(Ticket ticket) {
+    public List<Ticket> findByUserId(int userId) {
+        List<Ticket> userTickets = new ArrayList<>();
         try (Connection connection = pool.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(
-                     "UPDATE ticket SET id = ?, session_id = ?, pos_row = ?, cell = ?, user_id = ? WHERE id = ?")) {
-            stmt.setInt(1, ticket.getId());
-            stmt.setInt(2, ticket.getSessionId());
-            stmt.setInt(3, ticket.getPosRow());
-            stmt.setInt(4, ticket.getCell());
-            stmt.setInt(5, ticket.getUserId());
-            stmt.setInt(6, ticket.getId());
-            stmt.execute();
+             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM ticket t "
+                     + "JOIN sessions s on t.session_id = s.id WHERE user_id = ? ORDER BY s.timeofsession")) {
+            stmt.setInt(1, userId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    userTickets.add(new Ticket(rs.getString("name"),
+                            rs.getString("timeOfSession"),
+                            rs.getInt("pos_row"),
+                            rs.getInt("cell")));
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return userTickets;
     }
 }

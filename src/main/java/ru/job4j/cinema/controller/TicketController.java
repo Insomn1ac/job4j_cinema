@@ -67,4 +67,12 @@ public class TicketController {
         }
         return "redirect:/successfulBuying";
     }
+
+    @GetMapping("/personalCabinet")
+    public String findAllUserSessionsByTicket(Model model, HttpSession session) {
+        User user = (User) session.getAttribute("user");
+        model.addAttribute("tickets", service.findByUserId(user.getId()));
+        model.addAttribute("user", user);
+        return "personalCabinet";
+    }
 }

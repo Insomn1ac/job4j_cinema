@@ -6,6 +6,7 @@ import ru.job4j.cinema.model.Ticket;
 import ru.job4j.cinema.persistence.TicketDbStore;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,11 +26,11 @@ public class TicketService {
         return store.add(ticket);
     }
 
-    public Ticket findById(int id) {
+    public Optional<Ticket> findById(int id) {
         return store.findById(id);
     }
 
-    public void update(Ticket ticket) {
-        store.update(ticket);
+    public List<Ticket> findByUserId(int id) {
+        return store.findByUserId(id);
     }
 }

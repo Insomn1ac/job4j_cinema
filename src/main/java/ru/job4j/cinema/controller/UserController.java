@@ -47,13 +47,12 @@ public class UserController {
     }
 
     @PostMapping("/createUser")
-    public String createUser(Model model, @ModelAttribute User user, HttpServletRequest req) {
+    public String createUser(Model model, @ModelAttribute User user, HttpSession session) {
         Optional<User> regUser = service.add(user);
         if (regUser.isEmpty()) {
             model.addAttribute("message", "Пользователь с такой почтой или номером телефона уже существует");
             return "redirect:/fail";
         }
-        HttpSession session = req.getSession();
         session.setAttribute("user", regUser.get());
         return "redirect:/success";
     }

@@ -4,14 +4,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <style>
-        .alert {
-            padding: 20px;
-            background-color: #23a21e;
-            color: white;
-        }
-    </style>
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -25,13 +17,13 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+    <link href="/favicon.ico?" rel="icon"/>
     <title>Лучший кинотеатр в мире!</title>
 </head>
 <body>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Фильмы в прокате, <small th:text="${user.name}"></small>!</a>
+        <a class="navbar-brand" href="#">Ваш личный кабинет, <small th:text="${user.name}"></small>!</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                 aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -39,7 +31,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link" th:href="@{/sessions}">Сеансы</a>
-                <a class="nav-item nav-link" th:href="@{/personalCabinet}">Личный кабинет</a>
+                <a class="nav-item nav-link active" th:href="@{/personalCabinet}">Личный кабинет<span class="sr-only">(current)</span></a>
             </div>
             <div class="navbar-nav ml-auto">
                 <a class="nav-item nav-link" th:if="${user.name == 'Гость'}" th:href="@{/loginPage}">
@@ -53,8 +45,25 @@
             </div>
         </div>
     </nav>
-    <div class="alert">
-        Пользователь успешно зарегистрирован.
+    <div class="container">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th scope="col">Фильм</th>
+                <th scope="col">Время сеанса</th>
+                <th scope="col">Ряд</th>
+                <th scope="col">Место</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="ticket: ${tickets}">
+                <td th:text="${ticket.name}"></td>
+                <td th:text="${ticket.timeOfSession}"></td>
+                <td th:text="${ticket.posRow}"></td>
+                <td th:text="${ticket.cell}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>

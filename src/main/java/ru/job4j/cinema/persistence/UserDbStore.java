@@ -43,22 +43,23 @@ public class UserDbStore {
         return Optional.ofNullable(user);
     }
 
-    public User findUserByName(String name) {
+    public Optional<User> findUserByName(String name) {
+        Optional<User> user = Optional.empty();
         try (Connection connection = pool.getConnection();
              PreparedStatement stmt = connection.prepareStatement("SELECT id, username, email, phone FROM users WHERE username = ?")) {
             stmt.setString(1, name);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return new User(rs.getInt("id"),
+                    user = Optional.of(new User(rs.getInt("id"),
                             rs.getString("username"),
                             rs.getString("email"),
-                            rs.getString("phone"));
+                            rs.getString("phone")));
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return user;
     }
 
     public Optional<User> findUserByEmailAndPhone(String email, String phone) {

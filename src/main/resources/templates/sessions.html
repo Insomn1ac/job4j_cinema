@@ -31,7 +31,7 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav mr-auto">
                 <a class="nav-item nav-link active" th:href="@{/sessions}">Сеансы<span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="#">Личный кабинет</a>
+                <a class="nav-item nav-link" th:href="@{/personalCabinet}">Личный кабинет</a>
             </div>
             <div class="navbar-nav ml-auto">
                 <a class="nav-item nav-link" th:if="${user.name == 'Гость'}" th:href="@{/loginPage}">
@@ -49,6 +49,7 @@
         <table class="table table-hover">
             <thead>
             <tr>
+                <th scope="col">Превью</th>
                 <th scope="col">Название</th>
                 <th scope="col">Описание</th>
                 <th scope="col">Время</th>
@@ -57,6 +58,7 @@
             </thead>
             <tbody>
             <tr th:each="film: ${sessions}">
+                <td><img th:width="100" th:high="100" th:src="@{|/sessionPhoto/${film.id}|}"></td>
                 <td th:text="${film.name}"></td>
                 <td th:text="${film.description}"></td>
                 <td th:text="${film.timeOfSession}"></td>

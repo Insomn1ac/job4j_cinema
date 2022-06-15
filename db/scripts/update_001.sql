@@ -7,7 +7,10 @@ CREATE TABLE users (
 
 CREATE TABLE sessions (
   id SERIAL PRIMARY KEY,
-  name text
+  name text,
+  description text,
+  timeofsession text,
+  photo bytea
 );
 
 CREATE TABLE ticket (

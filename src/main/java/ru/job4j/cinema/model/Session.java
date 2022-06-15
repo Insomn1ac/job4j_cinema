@@ -7,6 +7,7 @@ public class Session implements Serializable {
     private String name;
     private String description;
     private String timeOfSession;
+    private byte[] photo;
 
     public Session() {
 
@@ -17,11 +18,12 @@ public class Session implements Serializable {
         this.name = name;
     }
 
-    public Session(int id, String name, String description, String timeOfSession) {
+    public Session(int id, String name, String description, String timeOfSession, byte[] photo) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.timeOfSession = timeOfSession;
+        this.photo = photo;
     }
 
     public int getId() {
@@ -54,5 +56,13 @@ public class Session implements Serializable {
 
     public void setTimeOfSession(String timeOfSession) {
         this.timeOfSession = timeOfSession;
+    }
+
+    public byte[] getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(byte[] photo) {
+        this.photo = photo;
     }
 }
